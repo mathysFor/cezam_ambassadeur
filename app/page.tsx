@@ -1,10 +1,12 @@
+import Image from "next/image";
 import { ApplicationForm } from "./components/ApplicationForm";
+import { ScrollReveal } from "./components/ScrollReveal";
 import { Simulator } from "./components/Simulator";
 
 const STATS = [
   { value: "20%", label: "Commission par vente" },
   { value: "500+", label: "Clients satisfaits" },
-  { value: "60j", label: "Garantie remboursement" },
+  { value: "30j", label: "Garantie remboursement" },
   { value: "0€", label: "Pour commencer" },
 ];
 
@@ -32,6 +34,8 @@ const PROOFS = [
     name: "Léa",
     niche: "Nutrition & bien-être",
     followers: "8 400 abonnés",
+    photo: "/lea.jpg.webp",
+    revenue: "147€",
     quote: "147€ ce mois, et je commence à peine.",
     avatarBg: "#7B9E87",
     avatarFg: "#F2EBE0",
@@ -41,6 +45,8 @@ const PROOFS = [
     name: "Romain",
     niche: "Fitness & lifestyle",
     followers: "14 200 abonnés",
+    photo: "/romain.jpg",
+    revenue: "271€",
     quote: "Mon code a converti 23 ventes en 3 semaines.",
     avatarBg: "#C9A84C",
     avatarFg: "#1A1A1A",
@@ -50,6 +56,8 @@ const PROOFS = [
     name: "Camille",
     niche: "Longévité & anti-âge",
     followers: "5 900 abonnés",
+    photo: "/camille.jpeg",
+    revenue: "198€",
     quote:
       "Le produit se vend tout seul, je parle juste de ma routine.",
     avatarBg: "#C08861",
@@ -93,6 +101,7 @@ const PERKS = [
 export default function Home() {
   return (
     <>
+      <ScrollReveal />
       <div className="top-banner">
         Programme ambassadeur ouvert · Places limitées
       </div>
@@ -111,7 +120,7 @@ export default function Home() {
         <div className="hero">
           <div className="badge-pill">
             <span className="badge-dot" />
-            Programme ouvert · 2025
+            Programme ouvert · 2026
           </div>
           <h1>
             Transforme ta passion
@@ -229,7 +238,7 @@ export default function Home() {
               <h3 className="rank-name">Découvreur</h3>
               <p className="rank-access">Accessible dès l&apos;inscription.</p>
               <div className="rank-headline">
-                <span className="rank-headline-n">15%</span>
+                <span className="rank-headline-n">20%</span>
                 <span className="rank-headline-l">Commission par vente</span>
               </div>
               <ul className="rank-perks">
@@ -248,7 +257,7 @@ export default function Home() {
               className="rank-card rank-card--featured"
               style={{ ["--rank-color" as string]: "#C9A84C" } as React.CSSProperties}
             >
-              <span className="rank-badge">Le plus populaire</span>
+              <span className="rank-badge">12 partenaires actifs</span>
               <div className="rank-meta">
                 <span className="rank-dot" />
                 <span className="rank-num">Rang 02</span>
@@ -258,8 +267,10 @@ export default function Home() {
                 Débloqué après 20 ventes cumulées.
               </p>
               <div className="rank-headline">
-                <span className="rank-headline-n">20%</span>
-                <span className="rank-headline-l">+ CPM 1€ / 1 000 vues</span>
+                <span className="rank-headline-n">+1€</span>
+                <span className="rank-headline-l">
+                  Par 1 000 vues, en plus du 20%
+                </span>
               </div>
               <ul className="rank-perks">
                 <li>20% de commission sur chaque vente</li>
@@ -346,15 +357,28 @@ export default function Home() {
                         ["--avatar-fg" as string]: p.avatarFg,
                       } as React.CSSProperties
                     }
-                    aria-hidden="true"
                   >
-                    {p.initials}
+                    {p.photo ? (
+                      <Image
+                        src={p.photo}
+                        alt={p.name}
+                        width={52}
+                        height={52}
+                        className="proof-avatar-img"
+                      />
+                    ) : (
+                      p.initials
+                    )}
                   </div>
                   <div className="proof-id">
                     <span className="proof-name">{p.name}</span>
                     <span className="proof-niche">{p.niche}</span>
                     <span className="proof-followers">{p.followers}</span>
                   </div>
+                </div>
+                <div className="proof-revenue">
+                  <span className="proof-revenue-amount">{p.revenue}</span>
+                  <span className="proof-revenue-label">/mois en ce moment</span>
                 </div>
                 <p className="proof-quote">&laquo;&nbsp;{p.quote}&nbsp;&raquo;</p>
               </article>

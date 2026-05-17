@@ -1,15 +1,12 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useActionState } from "react";
+import {
+  submitApplication,
+  type FormState,
+} from "../actions/submit-application";
 
-type FormState = {
-  firstName: string;
-  instagram: string;
-  email: string;
-  followers: string;
-  niche: string;
-  motivation: string;
-};
+const INITIAL_STATE: FormState = { status: "idle" };
 
 const FOLLOWER_RANGES = [
   "Moins de 1 000",
@@ -32,27 +29,12 @@ const NICHES = [
 ];
 
 export function ApplicationForm() {
-  const [form, setForm] = useState<FormState>({
-    firstName: "",
-    instagram: "",
-    email: "",
-    followers: "",
-    niche: "",
-    motivation: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
+  const [state, formAction, isPending] = useActionState(
+    submitApplication,
+    INITIAL_STATE,
+  );
 
-  function update<K extends keyof FormState>(key: K, value: FormState[K]) {
-    setForm((prev) => ({ ...prev, [key]: value }));
-  }
-
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    // TODO: wire up to backend / email service.
-    setSubmitted(true);
-  }
-
-  if (submitted) {
+  if (state.status === "success") {
     return (
       <div className="success">
         <div className="success-check">✓</div>
@@ -68,16 +50,15 @@ export function ApplicationForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form action={formAction}>
       <div className="form-row">
         <div className="fg">
           <label htmlFor="firstName">Prénom</label>
           <input
             id="firstName"
+            name="firstName"
             type="text"
             placeholder="Ton prénom"
-            value={form.firstName}
-            onChange={(e) => update("firstName", e.target.value)}
             required
           />
         </div>
@@ -85,10 +66,9 @@ export function ApplicationForm() {
           <label htmlFor="instagram">Instagram</label>
           <input
             id="instagram"
+            name="instagram"
             type="text"
             placeholder="@tonhandle"
-            value={form.instagram}
-            onChange={(e) => update("instagram", e.target.value)}
             required
           />
         </div>
@@ -99,21 +79,28 @@ export function ApplicationForm() {
           <label htmlFor="email">Email</label>
           <input
             id="email"
+            name="email"
             type="email"
             placeholder="ton@email.com"
-            value={form.email}
-            onChange={(e) => update("email", e.target.value)}
             required
           />
         </div>
         <div className="fg">
-          <label htmlFor="followers">Abonnés</label>
-          <select
-            id="followers"
-            value={form.followers}
-            onChange={(e) => update("followers", e.target.value)}
+          <label htmlFor="phone">Téléphone (WhatsApp)</label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            placeholder="06 12 34 56 78"
             required
-          >
+          />
+        </div>
+      </div>
+
+      <div className="form-row">
+        <div className="fg">
+          <label htmlFor="followers">Abonnés</label>
+          <select id="followers" name="followers" defaultValue="" required>
             <option value="" disabled>
               Sélectionne
             </option>
@@ -124,25 +111,19 @@ export function ApplicationForm() {
             ))}
           </select>
         </div>
-      </div>
-
-      <div className="fg">
-        <label htmlFor="niche">Niche principale</label>
-        <select
-          id="niche"
-          value={form.niche}
-          onChange={(e) => update("niche", e.target.value)}
-          required
-        >
-          <option value="" disabled>
-            Ta niche
-          </option>
-          {NICHES.map((niche) => (
-            <option key={niche} value={niche}>
-              {niche}
+        <div className="fg">
+          <label htmlFor="niche">Niche principale</label>
+          <select id="niche" name="niche" defaultValue="" required>
+            <option value="" disabled>
+              Ta niche
             </option>
-          ))}
-        </select>
+            {NICHES.map((niche) => (
+              <option key={niche} value={niche}>
+                {niche}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="fg">
@@ -161,15 +142,21 @@ export function ApplicationForm() {
         </label>
         <textarea
           id="motivation"
+          name="motivation"
           placeholder="Ce qui te parle dans le produit ou pourquoi tu veux rejoindre l'aventure..."
-          value={form.motivation}
-          onChange={(e) => update("motivation", e.target.value)}
         />
       </div>
 
-      <button type="submit" className="submit-btn">
-        Envoyer ma candidature →
+      <button type="submit" className="submit-btn" disabled={isPending}>
+        {isPending ? "Envoi en cours…" : "Envoyer ma candidature →"}
       </button>
+
+      {state.status === "error" && state.message && (
+        <p className="form-error" role="alert">
+          {state.message}
+        </p>
+      )}
+
       <p className="form-note">Aucun engagement. On te répond sous 48h.</p>
     </form>
   );
