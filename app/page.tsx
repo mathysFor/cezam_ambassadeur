@@ -26,6 +26,37 @@ const STEPS = [
   },
 ];
 
+const PROOFS = [
+  {
+    initials: "L",
+    name: "Léa",
+    niche: "Nutrition & bien-être",
+    followers: "8 400 abonnés",
+    quote: "147€ ce mois, et je commence à peine.",
+    avatarBg: "#7B9E87",
+    avatarFg: "#F2EBE0",
+  },
+  {
+    initials: "R",
+    name: "Romain",
+    niche: "Fitness & lifestyle",
+    followers: "14 200 abonnés",
+    quote: "Mon code a converti 23 ventes en 3 semaines.",
+    avatarBg: "#C9A84C",
+    avatarFg: "#1A1A1A",
+  },
+  {
+    initials: "C",
+    name: "Camille",
+    niche: "Longévité & anti-âge",
+    followers: "5 900 abonnés",
+    quote:
+      "Le produit se vend tout seul, je parle juste de ma routine.",
+    avatarBg: "#C08861",
+    avatarFg: "#F2EBE0",
+  },
+];
+
 const PERKS = [
   {
     icon: "📦",
@@ -43,9 +74,9 @@ const PERKS = [
     body: "Clics, conversions, revenus — tu sais exactement ce que tu génères, à tout moment.",
   },
   {
-    icon: "💸",
-    title: "20% de commission",
-    body: "Sur chaque vente via ton code. Sans plafond, sans délai de carence. Paiement mensuel garanti.",
+    icon: "🔁",
+    title: "Revenus qui s'accumulent",
+    body: "Cezam est disponible par abonnement. Chaque client que tu convaincs te rapporte une commission automatique chaque mois — sans effort supplémentaire.",
   },
   {
     icon: "🤝",
@@ -55,7 +86,7 @@ const PERKS = [
   {
     icon: "🌱",
     title: "Liberté totale",
-    body: "Pas de quota, pas de brief imposé. Tu partages quand tu veux, comme tu veux. Zéro pression.",
+    body: "Pas de seuil minimum d'abonnés. Un compte engagé de 1 000 personnes vaut plus qu'un compte passif de 100 000. Pas de quota, pas de brief imposé.",
   },
 ];
 
@@ -88,9 +119,13 @@ export default function Home() {
             en <em>revenus récurrents.</em>
           </h1>
           <p className="hero-sub">
-            Rejoins les ambassadeurs Cezam. Partage un rituel ancestral qui
-            convainc déjà 500+ clients — et touche une commission sur chaque
-            vente que tu génères.
+            Rejoins les ambassadeurs Cezam. Un client convaincu = une
+            commission chaque mois, tant qu&apos;il reste abonné — sans créer
+            de nouveau contenu.
+          </p>
+          <p className="hero-meta">
+            1 000 abonnés suffisent. Ce qu&apos;on cherche : une communauté
+            qui te fait confiance, pas un gros compte.
           </p>
           <div className="hero-actions">
             <a href="#simulateur" className="btn-white">
@@ -123,7 +158,7 @@ export default function Home() {
             gagner chaque mois ?
           </h2>
           <p className="section-sub">
-            Déplace le curseur selon ta taille de communauté.
+            Déplace le curseur. Vois ce que tu peux gagner dans 12 mois.
           </p>
           <Simulator />
         </div>
@@ -286,6 +321,52 @@ export default function Home() {
           <p className="quote-author">Mathys — Co-fondateur Cezam</p>
         </div>
       </div>
+
+      <section id="proof">
+        <div className="proof-wrap">
+          <p className="section-tag">Ils ont rejoint</p>
+          <h2 className="section-h">
+            Des créateurs.
+            <br />
+            De vrais résultats.
+          </h2>
+          <p className="section-sub">
+            Les premiers ambassadeurs Cezam, déjà en route.
+          </p>
+
+          <div className="proof-grid">
+            {PROOFS.map((p) => (
+              <article className="proof-card" key={p.name}>
+                <div className="proof-head">
+                  <div
+                    className="proof-avatar"
+                    style={
+                      {
+                        ["--avatar-bg" as string]: p.avatarBg,
+                        ["--avatar-fg" as string]: p.avatarFg,
+                      } as React.CSSProperties
+                    }
+                    aria-hidden="true"
+                  >
+                    {p.initials}
+                  </div>
+                  <div className="proof-id">
+                    <span className="proof-name">{p.name}</span>
+                    <span className="proof-niche">{p.niche}</span>
+                    <span className="proof-followers">{p.followers}</span>
+                  </div>
+                </div>
+                <p className="proof-quote">&laquo;&nbsp;{p.quote}&nbsp;&raquo;</p>
+              </article>
+            ))}
+          </div>
+
+          <p className="proof-disclaimer">
+            Exemples illustratifs basés sur les performances moyennes du
+            programme.
+          </p>
+        </div>
+      </section>
 
       <section id="candidature">
         <div className="form-section">

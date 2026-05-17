@@ -12,6 +12,7 @@ type FormState = {
 };
 
 const FOLLOWER_RANGES = [
+  "Moins de 1 000",
   "1 000 – 5 000",
   "5 000 – 10 000",
   "10 000 – 20 000",
