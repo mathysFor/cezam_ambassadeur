@@ -7,6 +7,12 @@ import {
   type FormState,
 } from "../actions/submit-application";
 
+declare global {
+  interface Window {
+    fbq: (...args: unknown[]) => void;
+  }
+}
+
 const INITIAL_STATE: FormState = { status: "idle" };
 
 const FOLLOWER_RANGES = [
@@ -160,7 +166,16 @@ export function ApplicationForm() {
         />
       </div>
 
-      <button type="submit" className="submit-btn" disabled={isPending}>
+      <button
+        type="submit"
+        className="submit-btn"
+        disabled={isPending}
+        onClick={() => {
+          if (typeof window !== "undefined" && window.fbq) {
+            window.fbq("track", "Lead");
+          }
+        }}
+      >
         {isPending ? "Envoi en cours…" : "Envoyer ma candidature →"}
       </button>
 
