@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { track } from "@/lib/track";
 
 const ONESHOT_COMM = 11.8;
 const SUB_COMM = 7.8;
@@ -107,7 +108,11 @@ export function Simulator() {
       </div>
 
       <div className="sim-cta-row">
-        <a href="#candidature" className="btn-white">
+        <a
+          href="#candidature"
+          className="btn-white"
+          onClick={() => track("simulateur")}
+        >
           Rejoindre le programme →
         </a>
       </div>

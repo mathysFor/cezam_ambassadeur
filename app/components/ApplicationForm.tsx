@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { track } from "@/lib/track";
 import {
   submitApplication,
   type FormState,
@@ -33,6 +34,12 @@ export function ApplicationForm() {
     submitApplication,
     INITIAL_STATE,
   );
+
+  useEffect(() => {
+    if (state.status === "success") {
+      track("candidature_soumise");
+    }
+  }, [state.status]);
 
   if (state.status === "success") {
     return (

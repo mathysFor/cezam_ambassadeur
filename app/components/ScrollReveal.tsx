@@ -15,6 +15,8 @@ const SELECTORS = [
   ".proof-grid > *",
   ".form-section > form",
   ".form-section > .form-sub",
+  ".product-layout",
+  ".product-pills > *",
 ].join(",");
 
 export function ScrollReveal() {

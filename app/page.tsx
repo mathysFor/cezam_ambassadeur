@@ -2,6 +2,17 @@ import Image from "next/image";
 import { ApplicationForm } from "./components/ApplicationForm";
 import { ScrollReveal } from "./components/ScrollReveal";
 import { Simulator } from "./components/Simulator";
+import { TrackedLink } from "./components/TrackedLink";
+
+// Set to null to show the placeholder.
+const PRODUCT_IMAGE: string | null = "/illu.png";
+
+const PRODUCT_PILLS = [
+  "3 000 ans d'histoire",
+  "500+ clients satisfaits",
+  "Remboursé si insatisfait — 30 jours",
+  "Disponible par abonnement",
+];
 
 const STATS = [
   { value: "20%", label: "Commission par vente" },
@@ -137,9 +148,13 @@ export default function Home() {
             qui te fait confiance, pas un gros compte.
           </p>
           <div className="hero-actions">
-            <a href="#simulateur" className="btn-white">
+            <TrackedLink
+              event="cta_hero"
+              href="#simulateur"
+              className="btn-white"
+            >
               Simuler mes revenus →
-            </a>
+            </TrackedLink>
             <a href="#comment" className="btn-ghost">
               Comment ça marche →
             </a>
@@ -157,6 +172,62 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      <section id="produit">
+        <div className="product-wrap">
+          <p className="section-tag">Le produit</p>
+          <h2 className="section-h">Ce que tu vas promouvoir.</h2>
+          <p className="section-sub">
+            Un produit ancestral qui se vend parce qu&apos;il fonctionne.
+          </p>
+
+          <div className="product-layout">
+            <div className="product-text">
+              <p>
+                Le sésame noir est utilisé depuis plus de 3 000 ans en
+                médecine chinoise pour la longévité, la vitalité et la santé
+                des cheveux. Cezam en a fait une poudre quotidienne — facile
+                à intégrer dans un smoothie, un yaourt ou un café du matin.
+              </p>
+              <p>
+                Pas d&apos;ingrédients artificiels. Pas de tendance passagère.
+                Un rituel que tes abonnés vont adopter durablement — et qui
+                te rapporte une commission chaque mois qu&apos;ils continuent.
+              </p>
+            </div>
+
+            <div className="product-visual">
+              {PRODUCT_IMAGE ? (
+                <Image
+                  src={PRODUCT_IMAGE}
+                  alt="Cezam — Poudre de sésame noir"
+                  width={1024}
+                  height={1536}
+                  sizes="(max-width: 900px) 100vw, 480px"
+                  className="product-image"
+                  priority
+                />
+              ) : (
+                <div className="product-placeholder" aria-hidden="true">
+                  <span className="product-placeholder-brand">cezam</span>
+                  <span className="product-placeholder-tagline">
+                    Poudre de sésame noir
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <ul className="product-pills">
+            {PRODUCT_PILLS.map((pill) => (
+              <li key={pill}>
+                <span className="product-pill-dot" aria-hidden="true" />
+                {pill}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
       <section id="simulateur">
         <div className="sim-wrap">
@@ -311,9 +382,13 @@ export default function Home() {
           </div>
 
           <div className="ranks-cta">
-            <a href="#candidature" className="btn-white">
+            <TrackedLink
+              event="cta_rangs"
+              href="#candidature"
+              className="btn-white"
+            >
               Rejoindre le programme →
-            </a>
+            </TrackedLink>
             <p className="ranks-footnote">
               Chaque vente compte. Chaque vue compte. La progression est
               automatique.
