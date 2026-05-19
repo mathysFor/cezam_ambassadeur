@@ -3,10 +3,14 @@
 import type { AnchorHTMLAttributes } from "react";
 import { track } from "@/lib/track";
 
-type Props = AnchorHTMLAttributes<HTMLAnchorElement> & { event: string };
+type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
+  event: string;
+  details?: Record<string, unknown>;
+};
 
 export function TrackedLink({
   event,
+  details,
   onClick,
   children,
   ...rest
@@ -15,7 +19,7 @@ export function TrackedLink({
     <a
       {...rest}
       onClick={(e) => {
-        track(event);
+        track(event, details);
         onClick?.(e);
       }}
     >

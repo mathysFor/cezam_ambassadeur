@@ -8,17 +8,26 @@ const supabase = createClient(
 
 export async function POST(req: NextRequest) {
   try {
-    const { event, path } = await req.json();
+    const body = await req.json();
+    const { event, path, details, session_id } = body ?? {};
+
     if (!event || typeof event !== "string") {
       return NextResponse.json(
         { ok: false, error: "missing event" },
         { status: 400 },
       );
     }
+
     const referrer = req.headers.get("referer") || "direct";
-    const { error } = await supabase
-      .from("events")
-      .insert({ event, path, referrer });
+
+    const { error } = await supabase.from("events").insert({
+      event,
+      path: typeof path === "string" ? path : null,
+      referrer,
+      details: details ?? null,
+      session_id: typeof session_id === "string" ? session_id : null,
+    });
+
     if (error) {
       console.error("[track] supabase insert error:", error);
       return NextResponse.json({ ok: false }, { status: 500 });

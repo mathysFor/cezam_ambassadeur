@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import { SectionTracker } from "./components/SectionTracker";
 import { TrackPageview } from "./components/TrackPageview";
 import "./globals.css";
 
@@ -42,6 +43,7 @@ export default function RootLayout({
       </head>
       <body>
         <TrackPageview />
+        <SectionTracker />
         {children}
       </body>
     </html>

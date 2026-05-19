@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { track } from "@/lib/track";
+import { track, trackOnce } from "@/lib/track";
 
 const ONESHOT_COMM = 11.8;
 const SUB_COMM = 7.8;
@@ -57,7 +57,10 @@ export function Simulator() {
           max={30_000}
           step={500}
           value={followers}
-          onChange={(e) => setFollowers(parseInt(e.target.value, 10))}
+          onChange={(e) => {
+            setFollowers(parseInt(e.target.value, 10));
+            trackOnce("simulator_interact");
+          }}
           aria-label="Taille de ma communauté"
         />
         <div className="sim-control-bounds">
@@ -111,7 +114,13 @@ export function Simulator() {
         <a
           href="#candidature"
           className="btn-white"
-          onClick={() => track("simulateur")}
+          onClick={() =>
+            track("cta_click", {
+              location: "simulator",
+              followers,
+              estimated_m12: totalM12,
+            })
+          }
         >
           Rejoindre le programme →
         </a>

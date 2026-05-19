@@ -118,16 +118,26 @@ export default function Home() {
       </div>
 
       <nav className="site-nav">
-        <a href="https://cezam.store" className="nav-wordmark">
+        <TrackedLink
+          event="external_click"
+          details={{ location: "nav_logo", target: "cezam.store" }}
+          href="https://cezam.store"
+          className="nav-wordmark"
+        >
           cezam
-        </a>
+        </TrackedLink>
         <span className="nav-badge">Programme Ambassadeur</span>
-        <a href="#candidature" className="nav-cta">
+        <TrackedLink
+          event="cta_click"
+          details={{ location: "nav" }}
+          href="#candidature"
+          className="nav-cta"
+        >
           Rejoindre →
-        </a>
+        </TrackedLink>
       </nav>
 
-      <section>
+      <section data-section="hero">
         <div className="hero">
           <div className="badge-pill">
             <span className="badge-dot" />
@@ -149,20 +159,26 @@ export default function Home() {
           </p>
           <div className="hero-actions">
             <TrackedLink
-              event="cta_hero"
+              event="cta_click"
+              details={{ location: "hero_primary" }}
               href="#simulateur"
               className="btn-white"
             >
               Simuler mes revenus →
             </TrackedLink>
-            <a href="#comment" className="btn-ghost">
+            <TrackedLink
+              event="cta_click"
+              details={{ location: "hero_secondary" }}
+              href="#comment"
+              className="btn-ghost"
+            >
               Comment ça marche →
-            </a>
+            </TrackedLink>
           </div>
         </div>
       </section>
 
-      <div className="stats">
+      <div className="stats" data-section="stats">
         <div className="stats-inner">
           {STATS.map((s) => (
             <div className="stat" key={s.label}>
@@ -173,7 +189,7 @@ export default function Home() {
         </div>
       </div>
 
-      <section id="produit">
+      <section id="produit" data-section="produit">
         <div className="product-wrap">
           <p className="section-tag">Le produit</p>
           <h2 className="section-h">Ce que tu vas promouvoir.</h2>
@@ -229,7 +245,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="simulateur">
+      <section id="simulateur" data-section="simulateur">
         <div className="sim-wrap">
           <p className="section-tag">Simulateur de revenus</p>
           <h2 className="section-h">
@@ -244,7 +260,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div id="comment" className="how">
+      <div id="comment" className="how" data-section="processus">
         <div className="how-inner">
           <p className="section-tag">Processus</p>
           <h2 className="section-h">
@@ -264,7 +280,7 @@ export default function Home() {
         </div>
       </div>
 
-      <section>
+      <section data-section="perks">
         <div className="perks-wrap">
           <p className="section-tag">Ce que tu reçois</p>
           <h2 className="section-h" style={{ marginBottom: 64 }}>
@@ -284,7 +300,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="programme-createurs">
+      <section id="programme-createurs" data-section="rangs">
         <div className="ranks-wrap">
           <p className="section-tag">Programme Créateurs</p>
           <h2 className="section-h">
@@ -383,7 +399,8 @@ export default function Home() {
 
           <div className="ranks-cta">
             <TrackedLink
-              event="cta_rangs"
+              event="cta_click"
+              details={{ location: "rangs" }}
               href="#candidature"
               className="btn-white"
             >
@@ -397,7 +414,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="quote-section">
+      <div className="quote-section" data-section="quote">
         <div className="quote-inner">
           <p className="quote-text">
             &laquo; Le sésame noir n&apos;est pas une mode, c&apos;est un
@@ -408,7 +425,7 @@ export default function Home() {
         </div>
       </div>
 
-      <section id="proof">
+      <section id="proof" data-section="proof">
         <div className="proof-wrap">
           <p className="section-tag">Ils ont rejoint</p>
           <h2 className="section-h">
@@ -467,7 +484,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="candidature">
+      <section id="candidature" data-section="candidature">
         <div className="form-section">
           <p className="section-tag">Candidature</p>
           <h2 className="section-h">Rejoindre le programme.</h2>
@@ -481,17 +498,29 @@ export default function Home() {
           © 2025 Cezam. Tous droits réservés.
         </span>
         <div className="footer-links">
-          <a href="https://cezam.store">Boutique</a>
-          <a href="https://cezam.store/policies/privacy-policy">
+          <TrackedLink
+            event="external_click"
+            details={{ location: "footer", target: "boutique" }}
+            href="https://cezam.store"
+          >
+            Boutique
+          </TrackedLink>
+          <TrackedLink
+            event="external_click"
+            details={{ location: "footer", target: "privacy" }}
+            href="https://cezam.store/policies/privacy-policy"
+          >
             Confidentialité
-          </a>
-          <a
+          </TrackedLink>
+          <TrackedLink
+            event="external_click"
+            details={{ location: "footer", target: "instagram" }}
             href="https://www.instagram.com/cezam_fr"
             target="_blank"
             rel="noreferrer"
           >
             Instagram
-          </a>
+          </TrackedLink>
         </div>
       </footer>
     </>

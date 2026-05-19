@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { track } from "@/lib/track";
+import { track, trackOnce } from "@/lib/track";
 import {
   submitApplication,
   type FormState,
@@ -37,9 +37,11 @@ export function ApplicationForm() {
 
   useEffect(() => {
     if (state.status === "success") {
-      track("candidature_soumise");
+      track("form_submit_success");
+    } else if (state.status === "error") {
+      track("form_submit_error", { message: state.message ?? "" });
     }
-  }, [state.status]);
+  }, [state.status, state.message]);
 
   if (state.status === "success") {
     return (
@@ -57,7 +59,11 @@ export function ApplicationForm() {
   }
 
   return (
-    <form action={formAction}>
+    <form
+      action={formAction}
+      onFocus={() => trackOnce("form_start")}
+      onSubmit={() => track("form_submit_attempt")}
+    >
       <div className="form-row">
         <div className="fg">
           <label htmlFor="firstName">Prénom</label>
